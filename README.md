@@ -19,7 +19,7 @@ add-on:
 
  * Python version 2.6 or later.  (These programs should run under Python 3 as well but have not been tested.)
 
- * The Python API for SQLite3 and all of its prerequisites.  On Linux distributions derived from Red Hat, this is available in the EPEL repo as python-sqlite3.
+ * The Python API for SQLite3 and all of its prerequisites.  On Linux distributions derived from Red Hat, this is available in the EPEL repo as `python-sqlite3`.
 
 ## Setup
 
@@ -41,10 +41,12 @@ You can test that the plugin works by issuing the following commands:
 
 If it works, it should output something along these lines:
 
+```
 asn,nic,country,org
 11164,arin,US,Internet2
 701,arin,US,"MCI Communications Services, Inc. d/b/a Verizon Business"
 1201,arin,US,Old Dominion University
+```
 
 You are now ready to start using the ASNInfo lookup commands!
   
@@ -53,5 +55,5 @@ You are now ready to start using the ASNInfo lookup commands!
 
 If you have logs with a single ASN field called `asn`:
 ```
-* | lookup ga2 asn
+* | lookup asninfo asn
 ```
