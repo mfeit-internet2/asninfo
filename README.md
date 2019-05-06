@@ -44,10 +44,12 @@ You can test that the plugin works by issuing the following commands:
 
 If it works, it should output something along these lines:
 
+```
 asn,nic,country,org
 11164,arin,US,Internet2
 701,arin,US,"MCI Communications Services, Inc. d/b/a Verizon Business"
 1201,arin,US,Old Dominion University
+```
 
 You are now ready to start using the ASNInfo lookup commands!
   
@@ -56,5 +58,5 @@ You are now ready to start using the ASNInfo lookup commands!
 
 If you have logs with a single ASN field called `asn`:
 ```
-* | lookup ga2 asn
+* | lookup asninfo asn
 ```
