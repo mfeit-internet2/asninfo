@@ -13,9 +13,7 @@ import sqlite3
 import sys
 
 # Splunk makes this directory the CWD before calling the script.
-DB_PATH = "{0}../data/asninfo.db".format(
-    os.path.dirname(sys.argv[0]) if sys.argv[0] != "" else "."
-)
+DB_PATH = "{0}/../data/asninfo.db".format(os.path.dirname(sys.argv[0]) or ".")
 
 db = sqlite3.connect(DB_PATH)
 db.text_factory = bytes
