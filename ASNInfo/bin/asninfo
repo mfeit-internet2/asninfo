@@ -1,65 +1,26 @@
-#!/usr/bin/python
+#!/bin/sh -e
 #
-# GeoIP2 ASN lookup for Splunk
-#
-#
-# Input:  asn
-# Output: rircountry org
+# Run a Python script using the system's Python and dump anything sent
+# to stderr to syslog on failure.
 #
 
-import csv
-import os
-import sqlite3
-import sys
+WHOAMI=$(basename "$0")
+WHEREAMI=$(dirname "$0")
 
-DB_PATH = "{0}/../data/asninfo.db".format(os.path.dirname(sys.argv[0]))
+TMPBASE="${TMPDIR:=/tmp}/${WHOAMI}.$$"
 
-db = sqlite3.connect(DB_PATH)
-cursor = db.cursor()
+SCRIPT="${WHEREAMI}/${WHOAMI}-wrapped"
+STDERR="${TMPBASE}.stderr"
 
-csv_in = csv.reader(sys.stdin)
-csv_out = csv.writer(sys.stdout)
+STATUS=0
+"${SCRIPT}" "$@" 2> "${STDERR}" || STATUS=$?
 
+if [ "${STATUS}" -ne 0 ]
+then
+    logger "Failure running ${SCRIPT}:"
+    [ -s "${STDERR}" ] \
+	&& logger < "${STDERR}" \
+	|| logger "(Nothing on stderr)"
+fi
 
-# The first line is always the header.  Pick it apart and figure out
-# where the fields we want live.
-
-header = csv_in.next()
-field_index = dict((name, pos) for pos, name in enumerate(header))
-
-index_asn = field_index["asn"]
-index_rir = field_index["rir"]
-index_country = field_index["country"]
-index_org = field_index["org"]
-
-# Write the file, header line first.
-
-csv_out.writerow(header)
-
-for line in csv_in:
-
-    try:
-
-        asn = line[index_asn]
-
-        cursor.execute(
-            "SELECT rir, country, org FROM asn WHERE asn = ?",
-            (asn,)
-        )
-
-        row = cursor.fetchone()
-
-        if row is None:
-            # Skip it.  Didn't find anything
-            raise IndexError
-
-        line[index_rir] = row[0]
-        line[index_country] = row[1]
-        line[index_org] = row[2]
-
-    except IndexError:
-        # Not there, don't care.
-        pass
-
-    # Write the row back no matter how it turned out.
-    csv_out.writerow(line)
+exit "${STATUS}"
