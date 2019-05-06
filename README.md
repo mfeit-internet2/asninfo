@@ -18,7 +18,8 @@ Your system must have the following installed prior to installing this
 add-on:
 
  * Python version 2.6 or later.  (These programs should run under
-   Python 3 as well but have not been tested.)
+   Python 3 as well but have not been tested.)  Note that this add-on
+   uses the system's Python, not the one supplied by Splunk.
 
  * The Python API for SQLite3 and all of its prerequisites.  On most
    distributions, this should be installed as part of the Python
