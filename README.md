@@ -17,9 +17,12 @@ The following commands are provided
 Your system must have the following installed prior to installing this
 add-on:
 
- * Python version 2.6 or later.  (These programs should run under Python 3 as well but have not been tested.)
+ * Python version 2.6 or later.  (These programs should run under
+   Python 3 as well but have not been tested.)
 
- * The Python API for SQLite3 and all of its prerequisites.  On Linux distributions derived from Red Hat, this is available in the EPEL repo as python-sqlite3.
+ * The Python API for SQLite3 and all of its prerequisites.  On most
+   distributions, this should be installed as part of the Python
+   libraries package.
 
 ## Setup
 
