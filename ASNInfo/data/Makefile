@@ -60,3 +60,5 @@ clean distclean:
 	make -C rir $@
 	make -C maxmind $@
 	rm -rf $(TO_CLEAN) *~
+
+update: distclean build
